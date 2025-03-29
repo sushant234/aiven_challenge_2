@@ -115,7 +115,42 @@ Configure roles in security/config.yml to control access to public and private d
 ## Conclusion
 This solution ensures that different teams in your organization can securely share and visualize data in real time using Aiven services. PostgreSQL stores sensitive records, Kafka streams updates, and OpenSearch provides advanced search and visualization capabilities.
 
+
+## Directory Structure
+
+```
+.
+├── terraform/
+│   ├── main.tf         # Kafka, PostgreSQL, OpenSearch cluster configuration
+│   ├── variables.tf    # variables configuration
+├── database/
+│   ├── insert_user.py  # Insert Data and Stream Changes to Kafka
+├── kafka/
+│   ├── kafka_data_classification.py # Kafka Consumer and Ingest Data into OpenSearch
+├── opensearch/
+│   ├── advance_query_mechanism.py     # Query mechanism for teams to access relevant OpenSearch data based on
+predefined roles.
+│   ├── query_update_info.py           # Query OpenSearch to show the updating information
+├── utils/
+│   ├── consume_debezium_changes.py  # Helper function to check the data is reflecting
+├── security/
+│   ├── config.yml  # yml file for setting user permission based on classification data role.
+├── requirements.txt    # Python dependencies
+└── README.md           # This file
+```
+
 ## Requirements
-- **Terraform**: For provisioning and managing Aiven services.
-- **Python**: Optional, for automating data insertion into PostgreSQL.
-- **Aiven Account**: To provision and manage PostgreSQL, Kafka, and OpenSearch services.
+
+- **Terraform**: For provisioning infrastructure
+- **Python 3.x**: For running the Python scripts
+- **Aiven account**: For using Aiven services like Kafka, PostgreSQL, and OpenSearch
+
+## Resources
+
+- [Aiven Kafka Documentation](https://aiven.io/docs/products/kafka)
+- [Aiven PostgreSQL Documentation](https://aiven.io/docs/products/postgresql)
+- [Aiven OpenSearch Documentation](https://aiven.io/docs/products/opensearch)
+  
+## License
+
+This project is licensed under the MIT License.
