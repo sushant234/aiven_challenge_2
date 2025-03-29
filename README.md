@@ -23,7 +23,7 @@ This solution enables teams to securely access and visualize data while ensuring
 ## Prerequisites
 Before starting, ensure you have the following:
 - **Terraform** installed for resource management in Aiven.
-- **Python** for automating data insertion into PostgreSQL (optional).
+- **Python** for data insertion into PostgreSQL and basic and advanced querying into Opensearch.
 - **Aiven account** with access to PostgreSQL, Kafka, and OpenSearch services.
 
 ## Steps to Implement
@@ -45,18 +45,29 @@ terraform apply
 ### 2. PostgreSQL CDC Configuration
 Enable Change Data Capture (CDC) in PostgreSQL and create a logical replication slot.
 
-1. Log into PostgreSQL and create the replication slot and publication:
+1. Log into PostgreSQL and create the user table with type of user:
 
 ```sql
-SELECT * FROM pg_create_logical_replication_slot('cdc_slot', 'pgoutput');
-CREATE PUBLICATION cdc_pub FOR TABLE users;
+   CREATE TABLE users (                                                   
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50),
+  email VARCHAR(100),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
-2. Set up the Debezium PostgreSQL connector to capture changes from PostgreSQL and stream them to Kafka.
+2. Create the replication slot and publication:
+
+```sql
+SELECT * FROM pg_create_logical_replication_slot('debezium_slot', 'pgoutput');
+CREATE PUBLICATION debezium_slot FOR TABLE users;
+```
+
+3. Set up the Debezium PostgreSQL connector to capture changes from PostgreSQL and stream them to Kafka.
 
 ### 3. Insert Data and Stream Changes to Kafka
-Use the following Python inset_user.py script to insert records into database:
-Go inside database folder and run
+Use the following Python inset_user.py script to insert records into database.
+Go inside database folder and run:
 
 ```bash 
     pip3 install -r requirements.txt
@@ -77,7 +88,7 @@ python3 consumer_data_classification.py
 Once the data is in OpenSearch, you can use **OpenSearch Dashboards** visualize the data and track updates in real-time.
 
 1. Go to the OpenSearch Dashboards interface.
-2. Define an index pattern (e.g., `postgres.public.users`).
+2. Define an index pattern (e.g., `users`).
 3. Use the dashboards to visualize the data and track changes over time.
 
 ### 6. Query OpenSearch
