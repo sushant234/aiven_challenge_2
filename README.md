@@ -64,6 +64,9 @@ CREATE PUBLICATION debezium_slot FOR TABLE users;
 ```
 
 3. Set up the Debezium PostgreSQL connector to capture changes from PostgreSQL and stream them to Kafka.
+      1. Go to Aiven console, inside project, kafka service, click on connector add Debezium PostgreSQL connector.
+      2. Set up configuration file as per Aiven doc.
+      3. Create a Topic.
 
 ### 3. Insert Data and Stream Changes to Kafka
 Use the following Python inset_user.py script to insert records into database.
