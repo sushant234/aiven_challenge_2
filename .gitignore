@@ -1,0 +1,38 @@
+# Ignore environment files
+.env
+.env.*
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv/
+.env/
+
+# Ignore any OS/system files
+.DS_Store
+Thumbs.db
+
+# Ignore certs folder (likely contains sensitive/private keys)
+certs/
+
+# Ignore logs and temp files
+*.log
+*.tmp
+
+# Ignore Terraform sensitive and state files
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+.terraform.lock.hcl
+crash.log
+*.backup
+
+# Editor/IDE configs
+.vscode/
+.idea/
+
+# Ignore Jupyter/IPython checkpoints if used
+.ipynb_checkpoints/

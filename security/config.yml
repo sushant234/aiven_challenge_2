@@ -1,0 +1,16 @@
+roles:
+  public_user:
+    cluster:
+      - "cluster_composite_ops"
+    indices:
+      - names: [ "users-index" ]
+        privileges: [ "read" ]
+        query: '{"term": {"after.data_classification": "public"}}'
+
+  private_user:
+    cluster:
+      - "cluster_composite_ops"
+    indices:
+      - names: [ "users-index" ]
+        privileges: [ "read" ]
+        query: '{}'
